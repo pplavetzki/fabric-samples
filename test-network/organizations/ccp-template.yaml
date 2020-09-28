@@ -14,6 +14,7 @@ organizations:
     - peer0.org${ORG}.example.com
     certificateAuthorities:
     - ca.org${ORG}.example.com
+    cryptoPath: ${CRYPTO}
 peers:
   peer0.org${ORG}.example.com:
     url: grpcs://localhost:${P0PORT}
@@ -33,3 +34,45 @@ certificateAuthorities:
           ${CAPEM}
     httpOptions:
       verify: false
+    registrar:
+      enrollId: "admin"
+      enrollSecret: "adminpw"
+channels:
+  mychannel:
+    orderers:
+      - orderer.example.com
+    peers:
+      peer0.org${ORG}.example.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+        discover: true
+
+orderers:
+  orderer.example.com:
+    url: grpcs://localhost:${ORDERERPORT}
+    tlsCACerts:
+      pem: |
+          ${ORDERERPEM}
+    grpcOptions:
+      ssl-target-name-override: orderer.example.com
+      hostnameOverride: orderer.example.com
+
+entityMatchers:
+  orderer:
+    - pattern: (\w+).example.(\w+)
+      urlSubstitutionExp: grpcs://localhost:${ORDERERPORT}
+      sslTargetOverrideUrlSubstitutionExp: orderer.example.com
+      mappedHost: orderer.example.com
+  peer:
+    - pattern: (\w+).org2.example.(\w+)
+      urlSubstitutionExp: grpcs://localhost:9051
+      sslTargetOverrideUrlSubstitutionExp: peer0.org2.example.com
+      mappedHost: peer0.org2.example.com
+    - pattern: (\w+).org1.example.(\w+)
+      urlSubstitutionExp: grpcs://localhost:7051
+      sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
+      mappedHost: peer0.org1.example.com
+
+

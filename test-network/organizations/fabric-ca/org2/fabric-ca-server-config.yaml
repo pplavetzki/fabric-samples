@@ -311,6 +311,7 @@ csr:
    hosts:
      - localhost
      - org2.example.com
+     - ca_org2
    ca:
       expiry: 131400h
       pathlength: 1
