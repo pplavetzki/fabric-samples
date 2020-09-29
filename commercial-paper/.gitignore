@@ -1,7 +1,7 @@
 cp.tar.gz
 **/.gradle
-**/gateway/connection-org1.yaml
-**/gateway/connection-org2.yaml
+**/gateway/*-org1.yaml
+**/gateway/*-org2.yaml
 **/*.gz
 **/*.tgz
 
