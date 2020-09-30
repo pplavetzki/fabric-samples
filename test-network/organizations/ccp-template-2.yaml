@@ -17,7 +17,7 @@ organizations:
     cryptoPath: ${CRYPTO}
 peers:
   peer0.org${ORG}.example.com:
-    url: grpcs://localhost:${P0PORT}
+    url: grpcs://peer0.org${ORG}.example.com:${P0PORT}
     tlsCACerts:
       pem: |
           ${PEERPEM}
@@ -26,7 +26,7 @@ peers:
       hostnameOverride: peer0.org${ORG}.example.com
 certificateAuthorities:
   ca.org${ORG}.example.com:
-    url: https://localhost:${CAPORT}
+    url: https://ca_org${ORG}:${CAPORT}
     caName: ca-org${ORG}
     tlsCACerts:
       pem: 
@@ -51,7 +51,7 @@ channels:
 
 orderers:
   orderer.example.com:
-    url: grpcs://localhost:${ORDERERPORT}
+    url: grpcs://orderer.example.com:${ORDERERPORT}
     tlsCACerts:
       pem: |
           ${ORDERERPEM}
@@ -62,16 +62,16 @@ orderers:
 entityMatchers:
   orderer:
     - pattern: (\w+).example.(\w+)
-      urlSubstitutionExp: grpcs://localhost:${ORDERERPORT}
+      urlSubstitutionExp: grpcs://orderer.example.com:${ORDERERPORT}
       sslTargetOverrideUrlSubstitutionExp: orderer.example.com
       mappedHost: orderer.example.com
   peer:
     - pattern: (\w+).org2.example.(\w+)
-      urlSubstitutionExp: grpcs://localhost:9051
+      urlSubstitutionExp: grpcs://peer0.org2.example.com:9051
       sslTargetOverrideUrlSubstitutionExp: peer0.org2.example.com
       mappedHost: peer0.org2.example.com
     - pattern: (\w+).org1.example.(\w+)
-      urlSubstitutionExp: grpcs://localhost:7051
+      urlSubstitutionExp: grpcs://peer0.org1.example.com:7051
       sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
       mappedHost: peer0.org1.example.com
 

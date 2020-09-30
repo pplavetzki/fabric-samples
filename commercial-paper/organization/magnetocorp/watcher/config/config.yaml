@@ -1,0 +1,11 @@
+---
+connectionConfigPath: ../gateway/connection-org2.yaml
+enrollmentWalletPath: ../identity/user
+identityCredentials:
+    identityUserName: isabella
+    identityOrgMSP: Org2MSP
+    walletPath: ../identity/user/isabella/wallet
+chaincode:
+    contract: papercontract
+    channel: mychannel
+    eventFilter: ".*"

@@ -8,6 +8,8 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/hyperledger/fabric-chaincode-go/shim"
+	"github.com/hyperledger/fabric-chaincode-go/shimtest"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -32,6 +34,12 @@ func (mpl *MockPaperList) GetPaper(issuer string, papernumber string) (*Commerci
 	return args.Get(0).(*CommercialPaper), args.Error(1)
 }
 
+func (mpl *MockPaperList) GetPaperByOwner(owner string) ([]byte, error) {
+	args := mpl.Called(owner)
+
+	return args.Get(0).([]byte), args.Error(1)
+}
+
 func (mpl *MockPaperList) UpdatePaper(paper *CommercialPaper) error {
 	args := mpl.Called(paper)
 
@@ -40,11 +48,16 @@ func (mpl *MockPaperList) UpdatePaper(paper *CommercialPaper) error {
 
 type MockTransactionContext struct {
 	contractapi.TransactionContext
-	paperList *MockPaperList
+	paperList     *MockPaperList
+	chaincodeStub *shimtest.MockStub
 }
 
 func (mtc *MockTransactionContext) GetPaperList() ListInterface {
 	return mtc.paperList
+}
+
+func (mtc *MockTransactionContext) GetStub() shim.ChaincodeStubInterface {
+	return mtc.chaincodeStub
 }
 
 func resetPaper(paper *CommercialPaper) {
@@ -65,6 +78,7 @@ func TestIssue(t *testing.T) {
 	ctx.paperList = mpl
 
 	contract := new(Contract)
+	ctx.chaincodeStub = shimtest.NewMockStub("papercontract", nil)
 
 	var sentPaper *CommercialPaper
 
@@ -91,6 +105,7 @@ func TestBuy(t *testing.T) {
 	ctx.paperList = mpl
 
 	contract := new(Contract)
+	ctx.chaincodeStub = shimtest.NewMockStub("papercontract", nil)
 
 	wsPaper := new(CommercialPaper)
 	resetPaper(wsPaper)
@@ -143,6 +158,7 @@ func TestRedeem(t *testing.T) {
 	ctx.paperList = mpl
 
 	contract := new(Contract)
+	ctx.chaincodeStub = shimtest.NewMockStub("papercontract", nil)
 
 	var sentPaper *CommercialPaper
 	wsPaper := new(CommercialPaper)

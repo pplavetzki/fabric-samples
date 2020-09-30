@@ -22,5 +22,5 @@ docker kill cliDigiBank cliMagnetoCorp logspout || true
 ./network.sh down
 
 # remove any stopped containers
-docker rm $(docker ps -aq)
+# docker rm $(docker ps -aq)
 
