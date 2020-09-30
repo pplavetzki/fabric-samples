@@ -16,7 +16,8 @@ build-watcher-image:
 	docker build -t ${ACR_NAME}/watcher:${TAG} -f $(ORG2_DIR)/watcher/watcher.dockerfile $(ORG2_DIR)/watcher/.
 	docker tag ${ACR_NAME}/watcher:${TAG} ${ACR_NAME}/watcher:latest
 
-run-watcher-image: build-watcher-image
+.PHONY: run-watcher
+run-watcher: build-watcher-image
 	# docker rm -f watcher.org2.example.com
 	docker run -d --name watcher.org2.example.com -h watcher.org2.example.com --network net_test -v $(ORG2_DIR)/gateway/dconnection-org2.yaml:/tmp/gateway/connection-org2.yaml \
 		-v $(ORG2_DIR)/watcher/config/:/tmp/config -v $(ORG2_DIR)/identity/user/isabella/wallet/:/tmp/credentials/isabella/wallet -e CONFIG_PATH=/tmp/config -e CONFIG_NAME=dconfig ${ACR_NAME}/watcher:${TAG}
@@ -41,8 +42,8 @@ clean-all:
 network-start:
 	./network-starter.sh
 
-.PHONY: todo
-todo: network-start install-go-cc
+.PHONY: deploy
+deploy: network-start install-go-cc
 
 .PHONY: enroll-org1
 enroll-org1:
