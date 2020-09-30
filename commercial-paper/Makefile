@@ -30,3 +30,30 @@ install-go-cc-org1:
 
 .PHONY: install-go-cc
 install-go-cc: install-go-cc-org2 install-go-cc-org1
+
+.PHONY: clean-all
+clean-all:
+	docker container rm $$(docker container list -f network=net_test -aq) -f
+	./network-clean.sh
+
+.PHONY: network-start
+network-start:
+	./network-starter.sh
+
+.PHONY: todo
+todo: network-start install-go-cc
+
+.PHONY: enroll-org1
+enroll-org1:
+	cd $(PAPER_DIR)/organization/digibank/application-go/cmd/enroll && go run .
+
+.PHONY: enroll-org2
+enroll-org2:
+	cd $(PAPER_DIR)/organization/magnetocorp/application-go/cmd/enroll && go run .
+
+.PHONY: enroll
+enroll: enroll-org2 enroll-org1
+
+.PHONY: issue
+issue:
+	cd $(PAPER_DIR)/organization/magnetocorp/application-go/cmd/issue && go run .

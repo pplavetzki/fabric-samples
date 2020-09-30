@@ -70,4 +70,8 @@ This is where we diverge from the standard deployment of chaincode.  Although yo
 I'll only summarize the differences:
 
 1. I added a builders directory to the peer containers that's responsible for building and executing the external chaincode.  This code is in the `fabric-samples/builders` directory.  For more info on what this looks like...[builders and launchers](https://hyperledger-fabric.readthedocs).
-2. 
+2. External chaincode can run as containers (services), so that's what we're going to do.  There is a make recipe to install the chaincode using the previous step.  This will package/deploy/approve/commit the chaincode to both MagnetoCorp and Digibank.  The recipe also includes the building and running of the chaincode as services in our deployed network.  It creates two services one each for MagnetoCorp and Digibank.
+
+From the `fabric-samples/commercial-paper` directory run the make recipe for installing the chaincode and running the services:
+
+```make install-go-cc```

@@ -7,7 +7,7 @@ package commercialpaper
 import (
 	"testing"
 
-	ledgerapi "github.com/hyperledger/fabric-samples/commercial-paper/organization/digibank/contract-go/ledger-api"
+	ledgerapi "github.com/hyperledger/fabric-samples/commercial-paper/organization/magnetocorp/contract-go/ledger-api"
 	"github.com/stretchr/testify/assert"
 )
 

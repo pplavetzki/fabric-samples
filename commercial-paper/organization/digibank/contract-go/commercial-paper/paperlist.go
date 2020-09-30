@@ -4,7 +4,7 @@
 
 package commercialpaper
 
-import ledgerapi "github.com/hyperledger/fabric-samples/commercial-paper/organization/digibank/contract-go/ledger-api"
+import ledgerapi "github.com/hyperledger/fabric-samples/commercial-paper/organization/magnetocorp/contract-go/ledger-api"
 
 // ListInterface defines functionality needed
 // to interact with the world state on behalf
