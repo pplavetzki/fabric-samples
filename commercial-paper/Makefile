@@ -9,16 +9,17 @@ ORG_NAME ?= org2
 
 BUILD_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST)))/..)
 PAPER_DIR = $(BUILD_DIR)/commercial-paper
+ORG2_DIR = $(PAPER_DIR)/organization/magnetocorp
 
 .PHONY: build-watcher-image
 build-watcher-image:
-	docker build -t ${ACR_NAME}/watcher:${TAG} -f watcher.dockerfile .
+	docker build -t ${ACR_NAME}/watcher:${TAG} -f $(ORG2_DIR)/watcher/watcher.dockerfile $(ORG2_DIR)/watcher/.
 	docker tag ${ACR_NAME}/watcher:${TAG} ${ACR_NAME}/watcher:latest
 
 run-watcher-image: build-watcher-image
 	# docker rm -f watcher.org2.example.com
-	docker run -d --name watcher.org2.example.com -h watcher.org2.example.com --network net_test -v $(BUILD_DIR)/gateway/dconnection-org2.yaml:/tmp/gateway/connection-org2.yaml \
-		-v $(PWD)/config/:/tmp/config -v $(BUILD_DIR)/identity/user/isabella/wallet/:/tmp/credentials/isabella/wallet -e CONFIG_PATH=/tmp/config -e CONFIG_NAME=dconfig ${ACR_NAME}/watcher:${TAG}
+	docker run -d --name watcher.org2.example.com -h watcher.org2.example.com --network net_test -v $(ORG2_DIR)/gateway/dconnection-org2.yaml:/tmp/gateway/connection-org2.yaml \
+		-v $(ORG2_DIR)/watcher/config/:/tmp/config -v $(ORG2_DIR)/identity/user/isabella/wallet/:/tmp/credentials/isabella/wallet -e CONFIG_PATH=/tmp/config -e CONFIG_NAME=dconfig ${ACR_NAME}/watcher:${TAG}
 
 .PHONY: install-go-cc-org2
 install-go-cc-org2:
@@ -58,10 +59,10 @@ enroll: enroll-org2 enroll-org1
 issue:
 	cd $(PAPER_DIR)/organization/magnetocorp/application-go/cmd/issue && go run .
 
-.PHONY: redeem
-redeem:
-	cd $(PAPER_DIR)/organization/digibank/application-go/cmd/redeem && go run .
-
 .PHONY: buy
 buy:
 	cd $(PAPER_DIR)/organization/digibank/application-go/cmd/buy && go run .
+
+.PHONY: redeem
+redeem:
+	cd $(PAPER_DIR)/organization/digibank/application-go/cmd/redeem && go run .
