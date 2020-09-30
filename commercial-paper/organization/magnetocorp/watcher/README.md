@@ -4,4 +4,4 @@ This application is used to receive events triggered from the chaincode.  In thi
 
 1. Listen on the channel
 2. Listen on the network
-3. Listen for chaincode events
+3. Listen for contract events
