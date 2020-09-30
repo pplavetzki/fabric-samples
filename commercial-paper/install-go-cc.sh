@@ -31,18 +31,20 @@ done
 
 SCRIPTS_DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 ROOT_DIR="$(dirname "$SCRIPTS_DIR")"
-PACKAGE_DIR=$ROOT_DIR/packaging
+PACKAGE_DIR=$SCRIPTS_DIR/packaging
 
 source $ORG_ENV
 
 if [ $ORG_NAME == "org1" ]
 then
     CHAINCODE_CONTAINER_PORT=$5
+    ORG_PATH=$SCRIPTS_DIR/organization/digibank
 fi
 
 if [ $ORG_NAME == "org2" ]
 then
     CHAINCODE_CONTAINER_PORT=$6
+    ORG_PATH=$SCRIPTS_DIR/organization/magnetocorp
 fi
 
 if [ ! -d $BUILD_DIR ]
@@ -89,7 +91,7 @@ PACKAGE_ID=$(query_cc)
 echo "package id:" $PACKAGE_ID
 echo "--------------------------------------------------------------------------------------------------------------------------------"
 echo "Building the docker image"
-docker build -t $ACR_NAME/contract-go:$TAG -f $ROOT_DIR/Dockerfile $ROOT_DIR/.
+docker build -t $ACR_NAME/contract-go:$TAG -f $ORG_PATH/contract-go/Dockerfile $ORG_PATH/contract-go/.
 docker tag $ACR_NAME/contract-go:$TAG $ACR_NAME/contract-go:latest
 echo "Removing old container if necessary"
 docker rm -f $CONTAINER_NAME

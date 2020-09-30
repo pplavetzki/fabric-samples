@@ -52,3 +52,22 @@ You will need to install the peer cli binaries and this fabric-samples repositor
 [Install the Samples, Binaries and Docker Images](https://hyperledger-fabric.readthedocs.io/en/latest/install.html) in the Hyperledger Fabric documentation.
 
 It is advised to have 3 console windows open; one to monitor the infrastructure and one each for MagnetoCorp and DigiBank. Once you've cloned the fabric-samples - change to the commercial-paper directory in each window.
+
+```
+cd fabric-samples/commercial-paper
+```
+
+## Running the Infrastructure
+
+In one console window, run the `./network-starter.sh` script; this will start the basic infrastructure.
+
+You can re-use this console window if you wish, but it is recommended to run a docker container monitoring script. This will let you view what Fabric is doing and help diagnose any failures.
+
+### Deploy the smart contract to the channel
+
+This is where we diverge from the standard deployment of chaincode.  Although you can still deploy the compiled/packaged chaincode to the peer.  The purpose of this sample is to deploy using external builders and launchers.
+
+I'll only summarize the differences:
+
+1. I added a builders directory to the peer containers that's responsible for building and executing the external chaincode.  This code is in the `fabric-samples/builders` directory.  For more info on what this looks like...[builders and launchers](https://hyperledger-fabric.readthedocs).
+2. 
