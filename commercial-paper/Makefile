@@ -57,3 +57,11 @@ enroll: enroll-org2 enroll-org1
 .PHONY: issue
 issue:
 	cd $(PAPER_DIR)/organization/magnetocorp/application-go/cmd/issue && go run .
+
+.PHONY: redeem
+redeem:
+	cd $(PAPER_DIR)/organization/digibank/application-go/cmd/redeem && go run .
+
+.PHONY: buy
+buy:
+	cd $(PAPER_DIR)/organization/digibank/application-go/cmd/buy && go run .

@@ -103,6 +103,8 @@ github.com/hyperledger/fabric-protos-go v0.0.0-20200707132912-fee30f3ccd23 h1:SE
 github.com/hyperledger/fabric-protos-go v0.0.0-20200707132912-fee30f3ccd23/go.mod h1:xVYTjK4DtZRBxZ2D9aE4y6AbLaPwue2o/criQyQbVD0=
 github.com/hyperledger/fabric-samples v1.4.8 h1:MD26kkSod3vhPDpuzOaHDm3RA1v6v9aH3/apgfMLVS4=
 github.com/hyperledger/fabric-samples v2.1.1+incompatible h1:/ke1oUPHXj6TbnhX7qIW6CmBJ/1DvY3tVARUEBRn88E=
+github.com/hyperledger/fabric-samples/commercial-paper/organization/digibank/contract-go v0.0.0-20200925120910-22393b629bca h1:ehWIDnlMMb66Kg0iG3hLRdx9BnSeZwy6pr6MNd9Zn8c=
+github.com/hyperledger/fabric-samples/commercial-paper/organization/digibank/contract-go v0.0.0-20200925120910-22393b629bca/go.mod h1:8TxXZDzKbTFZVlZoq6RSC9ko4wXteuv5ofCwkVUFLbQ=
 github.com/hyperledger/fabric-samples/commercial-paper/organization/magnetocorp/contract-go v0.0.0-20200925120910-22393b629bca h1:U9KIC7srQrphrhmfg3fi5hB9fqUDMe1USe/ZEkYFG0c=
 github.com/hyperledger/fabric-samples/commercial-paper/organization/magnetocorp/contract-go v0.0.0-20200925120910-22393b629bca/go.mod h1:c43XHgJXq+w0/FkS9mIozkYPuL3TcY/7r1Z8ijSqwoE=
 github.com/hyperledger/fabric-sdk-go v1.0.0-beta3 h1:A/hog3Eqz2w3daj5WM99JDDI8KfJFPhw0sKttp1TMc4=

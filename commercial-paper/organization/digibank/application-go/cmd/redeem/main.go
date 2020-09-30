@@ -3,7 +3,7 @@ package main
 import (
 	"path/filepath"
 
-	commercialpaper "github.com/hyperledger/fabric-samples/commercial-paper/organization/magnetocorp/contract-go/commercial-paper"
+	commercialpaper "github.com/hyperledger/fabric-samples/commercial-paper/organization/digibank/contract-go/commercial-paper"
 	"github.com/hyperledger/fabric-sdk-go/pkg/core/config"
 	"github.com/hyperledger/fabric-sdk-go/pkg/gateway"
 	"go.uber.org/zap"
