@@ -172,6 +172,8 @@ github.com/hyperledger/fabric-samples/commercial-paper/organization/magnetocorp/
 github.com/hyperledger/fabric-samples/commercial-paper/organization/magnetocorp/contract-go v0.0.0-20200925120910-22393b629bca/go.mod h1:c43XHgJXq+w0/FkS9mIozkYPuL3TcY/7r1Z8ijSqwoE=
 github.com/hyperledger/fabric-sdk-go v1.0.0-beta3 h1:A/hog3Eqz2w3daj5WM99JDDI8KfJFPhw0sKttp1TMc4=
 github.com/hyperledger/fabric-sdk-go v1.0.0-beta3/go.mod h1:qWE9Syfg1KbwNjtILk70bJLilnmCvllIYFCSY/pa1RU=
+github.com/hyperledger/fabric-sdk-go v1.0.0-beta3.0.20200910184200-a18228fa486b h1:p8V3EiEhmXtKqmTTrodIDg/MDK81ivyNN0u8XkXzrAU=
+github.com/hyperledger/fabric-sdk-go v1.0.0-beta3.0.20200910184200-a18228fa486b/go.mod h1:qWE9Syfg1KbwNjtILk70bJLilnmCvllIYFCSY/pa1RU=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
 github.com/jessevdk/go-flags v1.4.0/go.mod h1:4FA24M0QyGHXBuZZK/XkWh8h0e1EYbRYJSGM75WSRxI=
 github.com/jmhodges/clock v0.0.0-20160418191101-880ee4c33548/go.mod h1:hGT6jSUVzF6no3QaDSMLGLEHtHSBSefs+MgcDWnmhmo=

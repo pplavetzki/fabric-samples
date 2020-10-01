@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	commercialpaper "github.com/hyperledger/fabric-samples/commercial-paper/organization/magnetocorp/contract-go/commercial-paper"
-	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
+	event "github.com/hyperledger/fabric-sdk-go/pkg/client/event"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
 	provmsp "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/core/config"
@@ -83,7 +83,7 @@ func getGatewayConnection() (*gateway.Gateway, error) {
 	)
 }
 
-func startListenting() {
+func startClientEventListening() {
 	userName := viper.GetString("identityCredentials.identityUserName")
 
 	contract := viper.GetString("chaincode.contract")
@@ -149,26 +149,37 @@ func startListenting() {
 		logger.Sugar().Fatalf("failed to create channel provider: %s", err)
 	}
 
-	chClient, err := channel.New(chanProvider)
+	myclient, err := event.New(chanProvider, event.WithBlockEvents())
 	if err != nil {
-		logger.Sugar().Fatalf("could not create channel: %s", err)
+		logger.Sugar().Fatalf("failed to create client provider: %s", err)
 	}
-
-	reg, ccChan, err := chClient.RegisterChaincodeEvent(contract, eventFilter)
+	reg, ccChan, err := myclient.RegisterChaincodeEvent(contract, eventFilter)
 	if err != nil {
 		logger.Sugar().Fatalf("error registering chaincode event: %s", err)
 	}
-	defer chClient.UnregisterChaincodeEvent(reg)
+	defer myclient.Unregister(reg)
 
 	for {
 		select {
 		case event := <-ccChan:
 			log.Println("************************************************************************************************")
-			log.Println("From the startListening channel *****************************************")
+			log.Println("From the startClientEventListening channel *****************************************")
 			log.Println("************************************************************************************************")
 			log.Println("transaction id:", event.TxID, "chaincode id:", event.ChaincodeID, "event name:", event.EventName)
 			log.Println("Payload received:", string(event.Payload))
 			log.Println("************************************************************************************************")
+			var paper commercialpaper.CommercialPaper
+			err = paper.UnmarshalJSON(event.Payload)
+			if err != nil {
+				log.Printf("failed to unmarshal: %s\n", err)
+				log.Println(string(event.Payload))
+			} else {
+				log.Println("************************************************************************************************")
+				log.Println("From the startClientEventListening channel -- from the payload  ****************************************")
+				log.Println("************************************************************************************************")
+				log.Printf("Commercial paper issuer: %s, paper number: %s, issued for face value %d in state %s\n", paper.Issuer, paper.PaperNumber, paper.FaceValue, paper.GetState().String())
+				log.Println("************************************************************************************************")
+			}
 		}
 	}
 }
@@ -216,7 +227,6 @@ func contractListening() {
 				log.Printf("%s commercial paper : %s issued for value %d in state %s\n", paper.Issuer, paper.PaperNumber, paper.FaceValue, paper.GetState().String())
 				log.Println("************************************************************************************************")
 			}
-
 		}
 	}
 }
@@ -245,7 +255,7 @@ func networkListening() {
 		case event := <-blkChan:
 			blk := event.Block.GetData()
 			log.Println("************************************************************************************************")
-			log.Println("From the networkListening from the network *****************************************************")
+			log.Println("From the RegisterBlockEvent from the network *****************************************************")
 			log.Println("************************************************************************************************")
 			log.Println(blk)
 			log.Println("************************************************************************************************")
@@ -275,11 +285,11 @@ func init() {
 }
 
 func main() {
-	go startListenting()
+	go startClientEventListening()
 	go networkListening()
 	go contractListening()
 
-	log.Println("listening on all cylinders")
+	logger.Sugar().Info("listening on all cylinders")
 
 	select {}
 }
