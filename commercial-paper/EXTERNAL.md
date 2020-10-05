@@ -2,7 +2,7 @@
 
 This is a fork of the fabric-samples.
 
-## tl;dr
+## TL;DR
 
 1. `cd fabric-samples/commercial-paper`
 2. `make deploy`
